@@ -25,16 +25,14 @@ export default function App() {
 	const [text, setText] = useState("")
 	const [image, setImage] = useState(getz)
 	const pagePaste = (event) => {
-		var item = event.clipboardData.items[0]
+		var paste = event.clipboardData.items[0]
 
-		if (item.type.indexOf("image") === 0) {
-			var blob = item.getAsFile()
-
-			var reader = new FileReader()
-			reader.onload = function (event) {
-				document.getElementById("container").src = event.target.result
-			}
-
+		if (
+			paste.kind === "file" &&
+			(paste.type === "image/png" || paste.type === "image/jpeg")
+		) {
+			let blob = paste.getAsFile()
+			let reader = new FileReader()
 			reader.readAsDataURL(blob)
 		}
 	}
